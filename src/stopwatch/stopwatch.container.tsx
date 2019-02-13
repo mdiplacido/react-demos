@@ -13,10 +13,23 @@ interface StopWatchState {
   currentElapsedMilliseconds: number;
 }
 
-const FramesPerSecond = 24;
+const FramesPerSecond = 10;
 const MillisecondsInHour = 60 * 60 * 1000;
 const MillisecondsInMinute = 60 * 1000;
 const MillisecondsInSecond = 1000;
+
+const calcTime = (unitMilliseconds: number) => (remaining: number) => {
+  const total = Math.floor(remaining / unitMilliseconds);
+
+  return {
+    total,
+    remaining: remaining - (total * MillisecondsInHour)
+  }
+}
+
+const calcHours = calcTime(MillisecondsInHour);
+const calcMinutes = calcTime(MillisecondsInMinute);
+const calcSeconds = calcTime(MillisecondsInSecond);
 
 export default class StopwatchContainer extends Component<{}, StopWatchState> {
   private timerHandle?: number;
@@ -93,20 +106,15 @@ export default class StopwatchContainer extends Component<{}, StopWatchState> {
     const currentElapsed = now.getTime() - mark.getTime();
     let elapsed = currentElapsed + this.state.totalElapsedMilliseconds;
 
-    const hours = Math.floor(elapsed / MillisecondsInHour);
-    elapsed -= hours * MillisecondsInHour;
-
-    const minutes = Math.floor(elapsed / MillisecondsInMinute);
-    elapsed -= minutes * MillisecondsInMinute;
-
-    const seconds = Math.floor(elapsed / MillisecondsInSecond);
-    elapsed -= seconds * MillisecondsInSecond;
+    const hourInfo = calcHours(elapsed);
+    const minuteInfo = calcMinutes(hourInfo.remaining);
+    const secondInfo = calcSeconds(minuteInfo.remaining);
 
     this.setState({
-      hours,
-      minutes,
-      seconds,
-      milliseconds: elapsed,
+      hours: hourInfo.total,
+      minutes: minuteInfo.total,
+      seconds: secondInfo.total,
+      milliseconds: secondInfo.remaining,
       currentElapsedMilliseconds: currentElapsed
     });
   }
