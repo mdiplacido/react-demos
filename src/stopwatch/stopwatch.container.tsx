@@ -52,7 +52,7 @@ export default class StopwatchContainer extends Component<{}, StopWatchState> {
   render() {
     return (
       <div>
-        <h1>Hewwow, stopwatch!</h1>
+        <h1>Hewwo! stopwatch!</h1>
 
         <StopwatchDigits 
           hours={this.state.hours} 
