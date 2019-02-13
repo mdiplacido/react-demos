@@ -23,7 +23,7 @@ const calcTime = (unitMilliseconds: number) => (remaining: number) => {
 
   return {
     total,
-    remaining: remaining - (total * MillisecondsInHour)
+    remaining: remaining - (total * unitMilliseconds)
   }
 }
 
