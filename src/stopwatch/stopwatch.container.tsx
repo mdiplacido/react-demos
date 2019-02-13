@@ -104,7 +104,7 @@ export default class StopwatchContainer extends Component<{}, StopWatchState> {
 
     const now = new Date();
     const currentElapsed = now.getTime() - mark.getTime();
-    let elapsed = currentElapsed + this.state.totalElapsedMilliseconds;
+    const elapsed = currentElapsed + this.state.totalElapsedMilliseconds;
 
     const hourInfo = calcHours(elapsed);
     const minuteInfo = calcMinutes(hourInfo.remaining);
