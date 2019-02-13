@@ -13,7 +13,7 @@ interface StopWatchState {
   currentElapsedMilliseconds: number;
 }
 
-const FramesPerSecond = 10;
+const FramesPerSecond = 24;
 const MillisecondsInHour = 60 * 60 * 1000;
 const MillisecondsInMinute = 60 * 1000;
 const MillisecondsInSecond = 1000;
