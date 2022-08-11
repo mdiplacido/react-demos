@@ -1,0 +1,23 @@
+.flex-grid {
+    background-color: darkslategrey;
+    padding: 0rem;
+    display: flex;
+    flex-direction: row;
+}
+
+.cell {
+    /* font-size: 2rem; */
+    line-height: 1;
+    /* text-align: center; */
+    width: 3rem;
+    padding: 2rem 1rem;
+    background: black;
+    /* background: #e2f0ef; */
+    border: 1px solid #51aaa3;
+    /* color: #51aaa3; */
+    /* margin: 0.375rem; */
+}
+
+.alive {
+    background-color: white;
+}

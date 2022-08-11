@@ -34,7 +34,7 @@ const calcSeconds = calcTime(MillisecondsInSecond);
 export default class StopwatchContainer extends Component<{}, StopWatchState> {
   private timerHandle?: number;
 
-  public state: Readonly<StopWatchState> = {
+  public state: StopWatchState = {
     isRunning: false,
     hours: 0,
     minutes: 0,
@@ -66,6 +66,7 @@ export default class StopwatchContainer extends Component<{}, StopWatchState> {
   }
 
   private toggle = () => {
+    this.state.hours = 2;
     // start or stop the timer
     this.setState(prev => ({
       isRunning: !prev.isRunning,
