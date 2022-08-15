@@ -11,16 +11,39 @@ const makeInitialState = () => {
   ];
 };
 
+const makeRandom = (rows: number, cols: number) => {
+  const state = new Array(rows);
+  for (let row = 0; row < state.length; row++) {
+    const cells = new Array(cols).fill(0);
+    state[row] = cells;
+    for (let col = 0; col < cells.length; col++) {
+      if (Math.random() < 0.5) {
+        cells[col] = 1;
+      }
+    }
+  }
+  return state;
+};
+
 export const GameOfLife = () => {
-  const [state, setState] = React.useState(makeInitialState());
+  const [state, setState] = React.useState(makeRandom(100, 100));
   React.useEffect(() => {
     const handle = window.setInterval(() => {
       console.log("computing next game state");
-      updateGameState(state);
+      const hasChanges = updateGameState(state);
+      // hack for now, not the most efficient thing
+      // we are causing a complete rerender
+      // because we spread the top level state.
+      // come up with a way to rerender and make
+      // the grid only update cells that have changed...
       setState([...state]);
-    }, 2000);
+      if (!hasChanges) {
+        console.log("finished, no state changes left");
+        window.clearInterval(handle);
+      }
+    }, 200);
 
-    return () => window.clearTimeout(handle);
+    return () => window.clearInterval(handle);
   }, []);
   return (
     <>
