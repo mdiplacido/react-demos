@@ -34,7 +34,7 @@ const makeNextStateForCellActivation = (
   item.highlight = true;
 };
 
-const highLightRowsColsAndNeighbors = (
+const highlightRowsColsAndNeighbors = (
   state: IBoardItem[][],
   item: IBoardItem
 ) => {
@@ -75,7 +75,8 @@ export const Sudoku = () => {
       lastSelected.current.isSelected = false;
     }
     lastSelected.current = item;
-    highLightRowsColsAndNeighbors(state, item);
+    //  highlight
+    highlightRowsColsAndNeighbors(state, item);
     setState([...state]);
   };
   return (
