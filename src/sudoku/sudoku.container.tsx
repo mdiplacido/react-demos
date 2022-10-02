@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Board, CellActivationHandler } from "./board";
+import { Board, CellActivationHandler, NumberInputHandler } from "./board";
 import { IBoardItem } from "./board-item";
 
 const makeState: (rows: number, cols: number) => IBoardItem[][] = (
@@ -79,9 +79,16 @@ export const Sudoku = () => {
     highlightRowsColsAndNeighbors(state, item);
     setState([...state]);
   };
+  const handleNumberInput: NumberInputHandler = (item, value) => {
+    console.log(JSON.stringify(item) + " got value: " + value);
+  };
   return (
     <>
-      <Board state={state} cellActivated={handleCellActivation} />
+      <Board
+        state={state}
+        cellActivated={handleCellActivation}
+        numberInputHandler={handleNumberInput}
+      />
     </>
   );
 };

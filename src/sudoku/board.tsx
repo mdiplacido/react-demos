@@ -8,12 +8,29 @@ const makeCellActivationHandler =
   (item: IBoardItem, handler: CellActivationHandler) => (e: any) =>
     handler(item);
 
+// delete key will get translated to zero which means to clear the entry
+export type NumberInputHandler = (item: IBoardItem, value: number) => void;
+
+const makeKeyboardEventWrapper =
+  (item: IBoardItem, handler: NumberInputHandler) =>
+  (e: React.KeyboardEvent) => {
+    if (e.key === "Delete") {
+      handler(item, 0);
+    }
+    const n = +e.key;
+    if (n > 0 && n < 10) {
+      handler(item, n);
+    }
+  };
+
 export const Board = ({
   state,
   cellActivated,
+  numberInputHandler,
 }: {
   state: IBoardItem[][];
   cellActivated: CellActivationHandler;
+  numberInputHandler: NumberInputHandler;
 }) => {
   return (
     <div className="board-container">
@@ -35,6 +52,11 @@ export const Board = ({
                   }
                   key={colIdx}
                   onClick={makeCellActivationHandler(current, cellActivated)}
+                  tabIndex={0} // this index is needed to allow keyboard input
+                  onKeyDown={makeKeyboardEventWrapper(
+                    current,
+                    numberInputHandler
+                  )}
                 >
                   {current.candidates.join(", ").trim()}
                 </div>
